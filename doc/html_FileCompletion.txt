@@ -1,0 +1,91 @@
+*html_FileCompletion.txt*   Base dir- and URL-aware file completion for HTML links.
+
+		    HTML FILE COMPLETION    by Ingo Karkat
+						     *html_FileCompletion.vim*
+description			|html_FileCompletion-description|
+usage				|html_FileCompletion-usage|
+installation			|html_FileCompletion-installation|
+configuration			|html_FileCompletion-configuration|
+limitations			|html_FileCompletion-limitations|
+known problems			|html_FileCompletion-known-problems|
+todo				|html_FileCompletion-todo|
+history				|html_FileCompletion-history|
+
+==============================================================================
+DESCRIPTION				     *html_FileCompletion-description*
+
+This plugin offers insert mode file completion for HTML links to local files,
+taking into account a base directory (document root) and base URL (web server
+location) to enable completion of absolute (/foo...) and fully qualified
+(http://host/foo...) links.
+
+RELATED WORKS								     *
+
+==============================================================================
+USAGE						   *html_FileCompletion-usage*
+
+CTRL-X CTRL-F		Find matches for file names that start with the same
+			'isfname' characters as before the cursor. File names
+			are inserted in URL-escaped form (e.g. <Space> -> %20)
+			and always with forward slashes as path separator.
+			An absolute file path starting with "/" is interpreted
+			relative to |b:basedir|, and a base URL |b:baseurl| is
+			stripped off the front. This enables you to complete
+			file links even though they are specified as absolute
+			or fully qualified links in the HTML.
+
+==============================================================================
+INSTALLATION				    *html_FileCompletion-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vba.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim html_FileCompletion.vba.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES				    *html_FileCompletion-dependencies*
+
+- Requires Vim 7.0 or higher.
+
+==============================================================================
+CONFIGURATION				   *html_FileCompletion-configuration*
+
+Set the following variables in autocmds, filetype plugins or a local vimrc:
+								   *b:basedir*
+Specifies the local directory that represents the document root of the edited
+HTML file, i.e. where an absolute link starting with "/" points to.
+								   *b:baseurl*
+Specifies the server location of the |b:basedir| document root; i.e. a fully
+qualified link to the document root, including protocol and hostname.
+
+==============================================================================
+LIMITATIONS				     *html_FileCompletion-limitations*
+
+KNOWN PROBLEMS				  *html_FileCompletion-known-problems*
+
+TODO						    *html_FileCompletion-todo*
+
+- Auto-detect b:basedir by traversing up the directories until one is found
+  that contains no HTML files.
+
+IDEAS						   *html_FileCompletion-ideas*
+
+==============================================================================
+HISTORY						 *html_FileCompletion-history*
+
+1.00	15-May-2012
+First published version.
+
+0.01	09-May-2012
+Started development.
+
+==============================================================================
+Copyright: (C) 2012 Ingo Karkat
+Contains URL encoding / decoding algorithms written by Tim Pope.
+The VIM LICENSE applies to this script; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
