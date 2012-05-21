@@ -55,11 +55,24 @@ CONFIGURATION				   *html_FileCompletion-configuration*
 Set the following variables in autocmds, filetype plugins or a local vimrc:
 								   *b:basedir*
 Specifies the local directory that represents the document root of the edited
-HTML file, i.e. where an absolute link starting with "/" points to.
-								   *b:baseurl*
+HTML file, i.e. where an absolute link starting with "/" points to. To make
+this resistant to changes in the CWD, this should be an absolute dirspec. In a
+local vimrc located at the document root, you could use: >
+    let b:basedir = expand('<sfile>:p:h')
+<								   *b:baseurl*
 Specifies the server location of the |b:basedir| document root; i.e. a fully
 qualified link to the document root, including protocol and hostname.
 
+
+For a permanent configuration, put the following commands into your |vimrc|:
+				     *g:html_FileCompletion_WithinDocRootGlob*
+The |b:basedir| can be auto-discovered when it isn't set. Starting with the
+directory the current file is in, it will traverse the directory hierarchy
+upward until it finds a directory that does _not_ contain typical HTML files,
+and will then take the previous directory as the document root. You can adapt
+the file glob of what represents files within the document root via: >
+    let g:html_FileCompletion_WithinDocRootGlob = '*.{htm,html,xhtml,asp,gsp,jsp,php}'
+<
 ==============================================================================
 LIMITATIONS				     *html_FileCompletion-limitations*
 
@@ -67,13 +80,14 @@ KNOWN PROBLEMS				  *html_FileCompletion-known-problems*
 
 TODO						    *html_FileCompletion-todo*
 
-- Auto-detect b:basedir by traversing up the directories until one is found
-  that contains no HTML files.
-
 IDEAS						   *html_FileCompletion-ideas*
 
 ==============================================================================
 HISTORY						 *html_FileCompletion-history*
+
+1.10	16-May-2012
+ENH: Auto-discover b:basedir by traversing up the directories until one is
+found that contains no HTML files.
 
 1.00	15-May-2012
 First published version.

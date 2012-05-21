@@ -1,6 +1,7 @@
 " ft/html/FileCompletion.vim: Base dir- and URL-aware file completion for HTML links.
 "
 " DEPENDENCIES:
+"   - ft/html/FileCompletion/BaseDir.vim autoload script (for auto-discovery)
 "   - escapings.vim autoload script (unless CWD is set to the file's director,
 "     or 'autochdir' is set)
 "   - subs/URL.vim autoload script
@@ -11,6 +12,7 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.10.003	16-May-2012	Implement auto-discovery of the document root.
 "   1.00.002	15-May-2012	Need to :chdir to the file's directory to get
 "				glob results relative to the file.
 "	001	09-May-2012	file creation
@@ -33,9 +35,6 @@ function! s:FindFiles( base )
 	endif
     endtry
 endfunction
-function! s:DetermineBaseDir()
-    " TODO: Recurse upward until no *.html found.
-endfunction
 function! s:FindMatches( base )
     let l:base = a:base
     let l:baseUrl = ''
@@ -51,7 +50,7 @@ function! s:FindMatches( base )
     let l:baseDirspec = ''
     if l:base =~# '^/'
 	if ! exists('b:basedir')
-	    call s:DetermineBaseDir()
+	    call ft#html#FileCompletion#BaseDir#Discover()
 	endif
 	if exists('b:basedir')
 	    let l:baseDirspec = substitute(substitute(b:basedir, '\\', '/', 'g'), '/$', '', '')
