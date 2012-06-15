@@ -85,6 +85,9 @@ IDEAS						   *html_FileCompletion-ideas*
 ==============================================================================
 HISTORY						 *html_FileCompletion-history*
 
+1.11	12-Jun-2012
+FIX: Do not clobber the global CWD when the buffer has a local CWD set.
+
 1.10	16-May-2012
 ENH: Auto-discover b:basedir by traversing up the directories until one is
 found that contains no HTML files.

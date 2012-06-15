@@ -31,4 +31,11 @@ function! ft#html#FileCompletion#BaseDir#Discover()
     endwhile
 endfunction
 
+function! ft#html#FileCompletion#BaseDir#Get()
+    if ! exists('b:basedir')
+	call ft#html#FileCompletion#BaseDir#Discover()
+    endif
+    return (exists('b:basedir') ? substitute(substitute(b:basedir, '\\', '/', 'g'), '/$', '', '') : '')
+endfunction
+
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
