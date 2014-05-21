@@ -38,10 +38,10 @@ CTRL-X CTRL-F		Find matches for file names that start with the same
 INSTALLATION				    *html_FileCompletion-installation*
 
 This script is packaged as a |vimball|. If you have the "gunzip" decompressor
-in your PATH, simply edit the *.vba.gz package in Vim; otherwise, decompress
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
 the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
 vimball or via the |:UseVimball| command. >
-    vim html_FileCompletion.vba.gz
+    vim html_FileCompletion*.vmb.gz
     :so %
 To uninstall, use the |:RmVimball| command.
 
@@ -85,7 +85,10 @@ IDEAS						   *html_FileCompletion-ideas*
 ==============================================================================
 HISTORY						 *html_FileCompletion-history*
 
-1.11	12-Jun-2012
+1.12	21-May-2014
+FIX: Include missing autoload scripts in Vimball.
+
+1.11	12-Jun-2012 (broken)
 FIX: Do not clobber the global CWD when the buffer has a local CWD set.
 
 1.10	16-May-2012
@@ -99,7 +102,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2012 Ingo Karkat
+Copyright: (C) 2012-2014 Ingo Karkat
 Contains URL encoding / decoding algorithms written by Tim Pope.
 The VIM LICENSE applies to this script; see |copyright|.
 
