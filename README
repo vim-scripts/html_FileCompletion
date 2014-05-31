@@ -6,6 +6,10 @@ taking into account a base directory (document root) and base URL (web server
 location) to enable completion of absolute (/foo...) and fully qualified
 (http://host/foo...) links.
 
+RELATED WORKS
+- FilePathConvert.vim (vimscript #4885) converts filespecs between absolute,
+  relative, and URL (file://) formats.
+
 USAGE
 CTRL-X CTRL-F           Find matches for file names that start with the same
                         'isfname' characters as before the cursor. File names
@@ -16,3 +20,6 @@ CTRL-X CTRL-F           Find matches for file names that start with the same
                         stripped off the front. This enables you to complete
                         file links even though they are specified as absolute
                         or fully qualified links in the HTML.
+                        When there are no matches within the base directory,
+                        this falls back to default, non-URL-escaped file
+                        completion (i_CTRL-X_CTRL-F).

@@ -21,6 +21,11 @@ location) to enable completion of absolute (/foo...) and fully qualified
 
 RELATED WORKS								     *
 
+- |FilePathConvert.vim| (vimscript #4885) converts filespecs between absolute,
+  relative, and URL (file://) formats.
+- |html_PathConvert.vim| (vimscript #0000) converts links between absolute,
+  relative, and fully qualified URL formats.
+
 ==============================================================================
 USAGE						   *html_FileCompletion-usage*
 
@@ -33,6 +38,9 @@ CTRL-X CTRL-F		Find matches for file names that start with the same
 			stripped off the front. This enables you to complete
 			file links even though they are specified as absolute
 			or fully qualified links in the HTML.
+			When there are no matches within the base directory,
+			this falls back to default, non-URL-escaped file
+			completion (|i_CTRL-X_CTRL-F|).
 
 ==============================================================================
 INSTALLATION				    *html_FileCompletion-installation*
@@ -48,18 +56,20 @@ To uninstall, use the |:RmVimball| command.
 DEPENDENCIES				    *html_FileCompletion-dependencies*
 
 - Requires Vim 7.0 or higher.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.019 or
+  higher.
 
 ==============================================================================
 CONFIGURATION				   *html_FileCompletion-configuration*
 
 Set the following variables in autocmds, filetype plugins or a local vimrc:
-								   *b:basedir*
+								   |b:basedir|
 Specifies the local directory that represents the document root of the edited
 HTML file, i.e. where an absolute link starting with "/" points to. To make
 this resistant to changes in the CWD, this should be an absolute dirspec. In a
 local vimrc located at the document root, you could use: >
     let b:basedir = expand('<sfile>:p:h')
-<								   *b:baseurl*
+<								   |b:baseurl|
 Specifies the server location of the |b:basedir| document root; i.e. a fully
 qualified link to the document root, including protocol and hostname.
 
@@ -85,10 +95,18 @@ IDEAS						   *html_FileCompletion-ideas*
 ==============================================================================
 HISTORY						 *html_FileCompletion-history*
 
-1.12	21-May-2014
-FIX: Include missing autoload scripts in Vimball.
+1.20	31-May-2014
+- Detect absolute filespecs and handle them like the build-in file completion,
+  as the default mapping overrides that. If the user wants to convert the
+  filespec into a link, she must do this explicitly via the
+  html_PathConvert.vim plugin.
+- Add dependency to ingo-library (vimscript #4433). *** You need to separately
+  install ingo-library (vimscript #4433) version 1.019 (or higher)! ***
 
-1.11	12-Jun-2012 (broken)
+1.12	21-May-2014
+FIX: Include autoload scripts in Vimball that are missing in version 1.11.
+
+1.11	12-Jun-2012
 FIX: Do not clobber the global CWD when the buffer has a local CWD set.
 
 1.10	16-May-2012
@@ -103,8 +121,7 @@ Started development.
 
 ==============================================================================
 Copyright: (C) 2012-2014 Ingo Karkat
-Contains URL encoding / decoding algorithms written by Tim Pope.
-The VIM LICENSE applies to this script; see |copyright|.
+The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
 ==============================================================================
